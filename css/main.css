@@ -1,0 +1,20 @@
+table {
+    border-collapse: collapse;
+}
+
+td {
+    width: 100px;
+    height: 100px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid transparent;
+    background-color: darkseagreen;
+    margin: 1px;
+}
+
+.modal {
+
+    background-color: rgb(122, 158, 87);
+
+}
