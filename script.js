@@ -1,9 +1,22 @@
 let cells = document.querySelectorAll("#field td");
 let modal = document.querySelector('#modal')
+let gameOver = false;
+let btnReload = document.querySelector('#btnReload')
+
+
+
+
+
+
 function start(cells) {
+    let gameOver = false;
     let i = 0;
     for (let cell of cells) {
         cell.addEventListener('click', function step() {
+            //если игра кончена то выйти из функции
+            if (gameOver) {
+                return;
+            }
             //крестик появляется на четное значение счетчик ноль на нечетное значение
             if (i % 2 == 0) {
                 this.textContent = '✘';
@@ -13,11 +26,23 @@ function start(cells) {
             //удалить обработку клика чтобы крестик не менялся на нолик в этой ячейке
             this.removeEventListener('click', step);
 
+
+            this.removeEventListener('click', step);
             //увеличить счетчик на 
-            i++
+
             if (isWinner(cells)) {
-                modal.textContent = `🎉ты победил поздравляю 🎉${this.textContent}`
+                modal.textContent = `🎉ты победил поздравляю 🎉${this.textContent}`;
+                gameOver = true;
+                for (let cell of cells) {
+                    cell.removeEventListener('click ', step)
+                }
+
+
+            } else if (i == 8) {
+                modal.textContent = `НИЧЬЯ`;
+                gameOver = 'true'
             }
+            i++
         })
     }
 
@@ -45,7 +70,23 @@ function isWinner(cells) {
         }
 
     }
+
 }
+
+
+
+//кнопка перезагрузки игры 
+btnReload.addEventListener('click', () => {
+    //перебрать и очистить все ячейки 
+    for (let cell of cells) {
+        cell.textContent = ''
+        console.log(cell)
+    }
+    //очистить поле с выводом результатов 
+    modal.textContent = "";
+    //перезагрузить игру
+    start(cells)
+})
 
 
 
